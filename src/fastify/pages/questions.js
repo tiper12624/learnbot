@@ -15,7 +15,7 @@ class Question extends Model {
           [Sequelize.literal(`(SELECT COUNT(id) FROM sources WHERE questionId = questions.id)`), 'sources_count'],
           [Sequelize.literal(`(SELECT COUNT(id) FROM answers WHERE questionId = questions.id)`), 'answers_count'],
           [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE questionId = questions.id)`), 'results_count'],
-          [Sequelize.literal(`(SELECT COALESCE(SUM(right), 0) FROM results WHERE questionId = questions.id)`), 'rights'],
+          [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE questionId = questions.id AND results.right = true)`), 'rights'],
         ]
       },
       limit: perPage,

@@ -12,7 +12,7 @@ class User extends Model {
       attributes: {
         include: [
           [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE userId = users.id)`), 'answered'],
-          [Sequelize.literal(`(SELECT COALESCE(SUM(right), 0) FROM results WHERE userId = users.id)`), 'rights'],
+          [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE userId = users.id AND results.right = true)`), 'rights'],
         ]
       },
       limit: perPage,

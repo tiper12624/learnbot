@@ -28,8 +28,15 @@ class Result extends Model {
       pages: Math.ceil(results.count / perPage),
     }
 
-    const questionName = results.rows[0]['question.name'] ?? ''
-    const userId = results.rows[0]['user.id']
+    let questionName = ''
+    let userId = ''
+    if (results.rows.length > 0) {
+      questionName = results.rows[0]['question.name']
+      userId = results.rows[0]['user.id']
+    } else {
+      questionName = (await db.questions.findByPk(request.params.qid)).name
+      userId = (await db.users.findByPk(request.params.uid)).id
+    }
 
     reply.view('pages/results/list', {
       moment,
