@@ -46,7 +46,7 @@ class User extends Model {
     const user = reply.locals.models.users
 
     if (request.userId !== user.id) {
-      user.canAdmin = request.body.canAdmin ? 1 : 0
+      user.canAdmin = request.body.canAdmin !== undefined && request.body.canAdmin
     }
     user.notes = request.body.notes
     await user.save()

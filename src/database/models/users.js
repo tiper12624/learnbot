@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
     canAdmin: {
       type: Sequelize.DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: false,
     },
     sessionToken: {
       type: Sequelize.DataTypes.STRING,
