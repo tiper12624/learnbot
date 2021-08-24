@@ -24,7 +24,7 @@ bot.launch()
 
 // Fastify
 fastify.register(telegrafPlugin, { bot, path: SECRET_PATH })
-fastify.listen(process.env.PORT || 8080, (err, address) => {
+fastify.listen(process.env.PORT || 8080, '0.0.0.0', (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)
