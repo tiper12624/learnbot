@@ -12,10 +12,10 @@ class Question extends Model {
     const questions = await db.questions.findAndCountAll({
       attributes: {
         include: [
-          [Sequelize.literal(`(SELECT COUNT(sources.id) FROM sources WHERE sources.questionId = questions.id)`), 'sources_count'],
-          [Sequelize.literal(`(SELECT COUNT(answers.id) FROM answers WHERE answers.questionId = questions.id)`), 'answers_count'],
-          [Sequelize.literal(`(SELECT COUNT(results.id) FROM results WHERE results.questionId = questions.id)`), 'results_count'],
-          [Sequelize.literal(`(SELECT COUNT(results.id) FROM results WHERE results.questionId = questions.id AND results.right = true)`), 'rights'],
+          [Sequelize.literal(`(SELECT COUNT("sources"."id") FROM sources WHERE "sources"."questionId" = "questions"."id")`), 'sources_count'],
+          [Sequelize.literal(`(SELECT COUNT("answers"."id") FROM answers WHERE "answers"."questionId" = "questions"."id")`), 'answers_count'],
+          [Sequelize.literal(`(SELECT COUNT("results"."id") FROM results WHERE "results"."questionId" = "questions"."id")`), 'results_count'],
+          [Sequelize.literal(`(SELECT COUNT("results"."id") FROM results WHERE "results"."questionId" = "questions"."id" AND "results"."right" = true)`), 'rights'],
         ]
       },
       limit: perPage,
