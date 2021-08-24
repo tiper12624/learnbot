@@ -9,13 +9,13 @@ const { bot } = require('./telegraf')
 const { fastify } = require('./fastify')
 
 // Sequelize
-if (process.env.NODE_ENV === 'development') {
-  db.sequelize.sync().then(async () => {
+db.sequelize.sync().then(async () => {
+  if (process.env.NODE_ENV === 'development') {
     await seeders.users(db)
     await seeders.questions(db)
     await seeders.results(db)
-  })
-}
+  }
+})
 
 // Telegraf
 const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
@@ -24,7 +24,7 @@ bot.launch()
 
 // Fastify
 fastify.register(telegrafPlugin, { bot, path: SECRET_PATH })
-fastify.listen(process.env.WEB_PORT || process.env.PORT || 8080, (err, address) => {
+fastify.listen(process.env.PORT || 8080, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)
