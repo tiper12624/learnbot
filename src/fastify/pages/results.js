@@ -34,8 +34,12 @@ class Result extends Model {
       questionName = results.rows[0]['question.name']
       userId = results.rows[0]['user.id']
     } else {
-      questionName = (await db.questions.findByPk(request.params.qid)).name
-      userId = (await db.users.findByPk(request.params.uid)).id
+      if (request.params.qid) {
+        questionName = (await db.questions.findByPk(request.params.qid)).name
+      }
+      if (request.params.uid) {
+        userId = (await db.users.findByPk(request.params.uid)).id
+      }
     }
 
     reply.view('pages/results/list', {

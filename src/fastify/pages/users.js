@@ -11,8 +11,8 @@ class User extends Model {
     const users = await db.users.findAndCountAll({
       attributes: {
         include: [
-          [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE userId = users.id)`), 'answered'],
-          [Sequelize.literal(`(SELECT COUNT(id) FROM results WHERE userId = users.id AND results.right = true)`), 'rights'],
+          [Sequelize.literal(`(SELECT COUNT(results.id) FROM results WHERE results.userId = users.id)`), 'answered'],
+          [Sequelize.literal(`(SELECT COUNT(results.id) FROM results WHERE results.userId = users.id AND results.right = true)`), 'rights'],
         ]
       },
       limit: perPage,
