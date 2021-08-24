@@ -41,7 +41,7 @@ fastify.register(require('point-of-view'), {
     pug: require('pug')
   },
   includeViewExtension: true,
-  production: process.env.APP_ENV === 'production',
+  production: process.env.NODE_ENV !== 'development',
   root: path.resolve('src', 'templates'),
 })
 

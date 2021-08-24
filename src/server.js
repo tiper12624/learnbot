@@ -1,20 +1,30 @@
-require('dotenv').config()
+const telegrafPlugin = require('fastify-telegraf')
+
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
 
 const { db, seeders } = require('./database')
-db.sequelize.sync().then(async () => {
-  if (process.env.APP_ENV == 'development') {
+const { bot } = require('./telegraf')
+const { fastify } = require('./fastify')
+
+// Sequelize
+if (process.env.NODE_ENV === 'development') {
+  db.sequelize.sync().then(async () => {
     await seeders.users(db)
     await seeders.questions(db)
     await seeders.results(db)
-  }
-})
+  })
+}
 
-const { bot } = require('./telegraf')
+// Telegraf
+const SECRET_PATH = `/telegraf/${bot.secretPathComponent()}`
 bot.launch()
   .then(() => console.log('Bot launched successfully!'))
 
-const { fastify } = require('./fastify')
-fastify.listen(process.env.WEB_PORT, (err, address) => {
+// Fastify
+fastify.register(telegrafPlugin, { bot, path: SECRET_PATH })
+fastify.listen(process.env.WEB_PORT || process.env.PORT || 8080, (err, address) => {
   if (err) {
     console.error(err)
     process.exit(1)

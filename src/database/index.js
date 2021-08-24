@@ -1,9 +1,7 @@
 const { Sequelize } = require('sequelize')
 
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: process.env.DB_FILE || ':memory:',
-  logging: process.env.APP_ENV === 'production' ? false : console.log,
+const sequelize = new Sequelize(process.env.DB_DSN, {
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
 })
 
 const db = {
