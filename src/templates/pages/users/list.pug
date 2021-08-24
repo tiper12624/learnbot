@@ -1,0 +1,50 @@
+extends ../../layout/main
+
+block variables
+  - title = 'Пользователи'
+  - bodyClass = 'users'
+
+block content
+    .row
+        .col-lg-12
+            .card-box
+                .d-flex.mb-3.justify-content-between
+                    .font-weight-bold
+                        | Показаны записи c #{pagination.from} по #{pagination.to} из #{pagination.count}
+                    if pagination.pages > 1
+                        nav
+                            ul.pagination.mb-0.justify-content-end
+                                li.page-item(class={ 'disabled': pagination.page == 1 })
+                                    a.page-link(href=`?page=${pagination.page - 1}`) Пред
+                                - var i = 0
+                                while i < pagination.pages
+                                    li.page-item(class={ 'active': ++i == pagination.page })
+                                        a.page-link(href=`?page=${i}`)=i
+                                li.page-item(class={ 'disabled': pagination.page == pagination.pages })
+                                    a.page-link(href=`?page=${pagination.page + 1}`) След
+
+                .table-responsive
+                    table.table.table-hover.mb-0
+                        thead
+                            tr
+                                th ID
+                                th Админ
+                                th Отвечено
+                                th Примечание
+                                th
+                        tbody
+                          each user in users
+                              tr(class={ 'bg-light': user.id == iam })
+                                  td
+                                      a(href=`/results/user/${user.id}`) #{user.id}
+                                  td(class={ 'text-warning': user.canAdmin })
+                                      if user.canAdmin
+                                          i.mdi.mdi-check
+                                  td #{user.rights} / #{user.answered}
+                                  td #{user.notes}
+                                  td
+                                      .btn-group.btn-group-sm
+                                          a.btn.btn-warning(href=`/users/${user.id}/edit` type="button")
+                                              i.mdi.mdi-pencil
+                                          a.btn.btn-danger(href=`/users/${user.id}/remove` type="button")
+                                              i.mdi.mdi-delete

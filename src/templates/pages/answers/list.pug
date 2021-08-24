@@ -1,0 +1,48 @@
+extends ../../layout/main
+
+block variables
+  - title = `Варианты ответов вопроса "${question.name}"`
+  - bodyClass = 'answers'
+
+block content
+    .mb-3
+        a.btn.btn-secondary.mr-2(href=`/questions/${question.id}/edit`) &laquo; К вопросу
+        a.btn.btn-success(href=`/questions/${question.id}/answer`) Новый ответ
+    .row
+        .col-lg-12
+            .card-box
+                .d-flex.mb-3.justify-content-between
+                    .font-weight-bold
+                        | Показаны записи c #{pagination.from} по #{pagination.to} из #{pagination.count}
+                    if pagination.pages > 1
+                        nav
+                            ul.pagination.mb-0.justify-content-end
+                                li.page-item(class={ 'disabled': pagination.page == 1 })
+                                    a.page-link(href=`?page=${pagination.page - 1}`) Пред
+                                - var i = 0
+                                while i < pagination.pages
+                                    li.page-item(class={ 'active': ++i == pagination.page })
+                                        a.page-link(href=`?page=${i}`)=i
+                                li.page-item(class={ 'disabled': pagination.page == pagination.pages })
+                                    a.page-link(href=`?page=${pagination.page + 1}`) След
+
+                .table-responsive
+                    table.table.table-hover.mb-0
+                        thead
+                            tr
+                                th Ответ
+                                th Правильный
+                                th Ответное сообщение
+                                th
+                        tbody
+                          each answer in answers
+                              tr
+                                  td #{answer.text}
+                                  td #{answer.right}
+                                  td #{answer.replyText}
+                                  td
+                                      .btn-group.btn-group-sm
+                                          a.btn.btn-warning(href=`/answers/${answer.id}/edit` type="button")
+                                              i.mdi.mdi-pencil
+                                          a.btn.btn-danger(href=`/answers/${answer.id}/remove` type="button")
+                                              i.mdi.mdi-delete

@@ -1,0 +1,24 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Новый источник`
+  - bodyClass = 'new'
+
+block content
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'name', 'Название', '')
+                .form-group.row
+                    label.col-md-2.col-form-label Тип источника
+                    .col-md-10
+                        select.form-control(name='type')
+                            option(value='text') Текст
+                            option(value='document') Документ
+                            option(value='photo') Изображение
+                            option(value='audio') Аудио
+                            option(value='video') Видео
+                            option(value='mediaGroup') Группа изображений
+                +button('submit', 'Создать')

@@ -1,0 +1,41 @@
+doctype html
+html(lang="ru")
+    block variables
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        title= title + ' - LearnBot'
+
+        link(href="/assets/css/bootstrap-dark.min.css" rel="stylesheet" type="text/css")
+        link(href="/assets/css/icons.min.css" rel="stylesheet" type="text/css")
+        link(href="/assets/css/app-dark.min.css" rel="stylesheet" type="text/css")
+
+        link(href="/assets/favicon.ico" rel="shortcut icon" type="image/x-icon")
+
+        style(type="text/css").
+          a {color: #bbd4fa}
+          a:hover {color: #89c2fa}
+
+        block head
+    body(data-layout="horizontal" data-topbar="dark" class='page ' + bodyClass)
+        div(id="wrapper")
+            include ../includes/header
+
+            .content-page
+                .content
+                    .container-fluid
+                        .row
+                            .col-12
+                                .page-title-box.d-flex.align-items-center.justify-content-between
+                                    h4.page-title= title
+
+                        if message
+                            div(class=`alert alert-${message.type}`)=message.message
+
+                        block content
+
+        script(src="/assets/js/vendor.min.js")
+        script(src="/assets/libs/jquery-knob/jquery.knob.min.js")
+        script(src="/assets/libs/morris-js/morris.min.js")
+        script(src="/assets/libs/raphael/raphael.min.js")
+        script(src="/assets/js/app.min.js")

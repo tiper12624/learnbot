@@ -1,0 +1,26 @@
+mixin panel(title, value)
+    .card-box
+        h4.header-title.mt-0=title
+        .widget-detail.text-right
+            h2.font-weight-normal.mb-1=value
+
+mixin panel-chart(title, fgColor, bgColor, value)
+    .card-box
+        h4.header-title.mt-0.mb-3=title
+        .widget-chart
+            .widget-chart-box.float-left
+                input(
+                    data-plugin="knob"
+                    data-width="80"
+                    data-height="80"
+                    data-fgColor=`${fgColor}`
+                    data-bgColor=`${bgColor}`
+                    value=`${value}`
+                    data-skin="tron"
+                    data-angleOffset="180"
+                    data-readOnly=true
+                    data-thickness=".15"
+                )
+            .widget-detail.text-right
+                h2.font-weight-normal.mb-1=value
+                p.text-muted.mb-3=title

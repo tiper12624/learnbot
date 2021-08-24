@@ -1,0 +1,13 @@
+extends ../layout/main
+
+include ../mixins/form
+
+block variables
+  - title = `${title}`
+  - bodyClass = 'delete'
+
+block content
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +removeButton()

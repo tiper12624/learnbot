@@ -1,0 +1,16 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Новый ответ`
+  - bodyClass = 'new'
+
+block content
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'text', 'Текст ответа', '')
+                +formElement('checkbox', 'right', 'Правильный ответ', false)
+                +formElement('textarea', 'replyText', 'Ответный текст', '')
+                +button('submit', 'Создать')

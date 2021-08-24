@@ -1,0 +1,15 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Пользователь #${user.id}`
+  - bodyClass = 'edit'
+
+block content
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('checkbox', 'canAdmin', 'Администратор', user.canAdmin)
+                +formElement('text', 'notes', 'Примечание', user.notes)
+                +button('submit', 'Сохранить')

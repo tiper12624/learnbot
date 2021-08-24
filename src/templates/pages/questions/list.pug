@@ -1,0 +1,65 @@
+extends ../../layout/main
+
+block variables
+  - title = 'Вопросы'
+  - bodyClass = 'questions'
+
+block content
+    .mb-3
+        a.btn.btn-primary(href='/question') Новый вопрос
+    .row
+        .col-lg-12
+            .card-box
+                .d-flex.mb-3.justify-content-between
+                    .font-weight-bold
+                        | Показаны записи c #{pagination.from} по #{pagination.to} из #{pagination.count}
+                    if pagination.pages > 1
+                        nav
+                            ul.pagination.mb-0.justify-content-end
+                                li.page-item(class={ 'disabled': pagination.page == 1 })
+                                    a.page-link(href=`?page=${pagination.page - 1}`) Пред
+                                - var i = 0
+                                while i < pagination.pages
+                                    li.page-item(class={ 'active': ++i == pagination.page })
+                                        a.page-link(href=`?page=${i}`)=i
+                                li.page-item(class={ 'disabled': pagination.page == pagination.pages })
+                                    a.page-link(href=`?page=${pagination.page + 1}`) След
+
+                .table-responsive
+                    table.table.table-hover.mb-0
+                        thead
+                            tr
+                                th Название
+                                th Активен
+                                th Источников
+                                th Ответов
+                                th Отвечено
+                                th
+                        tbody
+                          each question in questions
+                              tr
+                                  td
+                                      a(href=`/results/question/${question.id}`) #{question.name}
+                                  td(class={ 'text-info': question.enabled })
+                                      if question.enabled
+                                          i.mdi.mdi-check
+                                  td #{question.sources_count}
+                                  td #{question.answers_count}
+                                  td #{question.rights} / #{question.results_count}
+                                  td
+                                      .btn-group.btn-group-sm
+                                          a.btn.btn-primary(href=`/questions/${question.id}/send` type="button")
+                                              i.mdi.mdi-send
+                                          a.btn(
+                                              href=`/questions/${question.id}/toggle`
+                                              type="button"
+                                              class={ 'btn-dark': question.enabled, 'btn-success': !question.enabled }
+                                          )
+                                              if question.enabled
+                                                  i.mdi.mdi-close
+                                              else
+                                                  i.mdi.mdi-check
+                                          a.btn.btn-warning(href=`/questions/${question.id}/edit` type="button")
+                                              i.mdi.mdi-pencil
+                                          a.btn.btn-danger(href=`/questions/${question.id}/remove` type="button")
+                                              i.mdi.mdi-delete

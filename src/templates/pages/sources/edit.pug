@@ -1,0 +1,28 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Редактирование источника`
+  - bodyClass = 'edit'
+
+block content
+    .mb-3
+        a.btn.btn-secondary(href=`/questions/${source.questionId}/sources`) &laquo; К списку
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'name', 'Название', source.name)
+                .form-group.row
+                    label.col-md-2.col-form-label Тип источника
+                    .col-md-10
+                        input.form-control-plaintext.font-weight-bold(type="text" readonly value=`${translateSourceType(source.type)}`)
+
+                if source.type == 'text'
+                    include ../../includes/types/text
+                if source.type == 'document' || source.type == 'photo' || source.type == 'audio' || source.type == 'video'
+                    include ../../includes/types/media
+                if source.type == 'mediaGroup'
+                    include ../../includes/types/group
+
+                +button('submit', 'Сохранить')

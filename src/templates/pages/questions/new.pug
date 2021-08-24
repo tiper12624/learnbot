@@ -1,0 +1,14 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Новый вопрос`
+  - bodyClass = 'new'
+
+block content
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'name', 'Название', '')
+                +button('submit', 'Создать')

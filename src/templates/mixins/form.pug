@@ -1,0 +1,52 @@
+mixin formElement(type, name, label, value)
+  - var isCheckbox = type == 'checkbox'
+  - var isLabel = !isCheckbox
+  - var inputClass = isLabel ? 'col-md-10' : 'col-md-10 offset-sm-2'
+
+  .form-group.row
+      if isLabel
+          label.col-md-2.col-form-label(for=name)=label
+      div(class=inputClass)
+          if isCheckbox
+              +checkbox(name, value, label)
+          else
+              +input(type, name, value)
+
+mixin input(type, name, value)
+    if type == 'textarea'
+        textarea.form-control(
+            id=name
+            name=name
+            rows="4"
+        )=value
+    else
+        input.form-control(
+            type=type
+            id=name
+            name=name
+            value=value != null ? value : ''
+        )
+
+mixin checkbox(name, value, label)
+    .custom-control.custom-checkbox
+        input.custom-control-input(
+            type='checkbox'
+            id=name
+            name=name
+            checked=value
+        )
+        label.custom-control-label(for=name)=label
+
+mixin button(type, label)
+    .form-group.row.mb-0
+        .col-md-10.offset-sm-2
+            button.btn.btn-primary(
+                type=type
+            )=label
+
+mixin removeButton()
+    .form-group.mb-0
+        .col-md-12
+            button.btn.btn-danger(
+                type="submit"
+            ) Удалить

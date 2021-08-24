@@ -1,0 +1,22 @@
+extends layout/main
+
+include mixins/dashboard
+
+block variables
+  - title = 'Панель управления'
+  - bodyClass = 'dashboard'
+
+block content
+    .row
+        .col-xl-3.col-md-6
+            +panel('Всего пользователей', usersCount)
+            //+panel-chart('Всего пользователей', '#10c46a', '#65cf9a', usersCount)
+
+        .col-xl-3.col-md-6
+            +panel('Всего вопросов', questionsCount)
+
+        .col-xl-3.col-md-6
+            +panel('Всего ответов', resultsCount)
+
+        .col-xl-3.col-md-6
+            +panel('Всего правильных ответов', rightsCount)

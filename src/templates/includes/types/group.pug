@@ -1,0 +1,13 @@
+include ../../mixins/form
+
+hr
+- var i = 0
+while i < 10
+  - i++
+  - var media = source.media[i-1] ? source.media[i-1].media : ''
+  +formElement('text', 'groupMedia', `Hash медиа ${i}`, media)
+  if link[i - 1] != undefined && link[i - 1] != ''
+      .form-group.row
+          .col-md-10.offset-sm-2
+              img(src=link[i - 1] style="width:300px")
+hr

@@ -1,0 +1,18 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Редактирование вопроса`
+  - bodyClass = 'edit'
+
+block content
+    .mb-3
+        a.btn.btn-info.mr-2(href=`/questions/${question.id}/sources`) Источники
+        a.btn.btn-success(href=`/questions/${question.id}/answers`) Ответы
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'name', 'Название', question.name)
+                +formElement('checkbox', 'enabled', 'Активный вопрос', question.enabled)
+                +button('submit', 'Сохранить')

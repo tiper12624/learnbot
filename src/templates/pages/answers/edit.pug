@@ -1,0 +1,18 @@
+extends ../../layout/main
+
+include ../../mixins/form
+
+block variables
+  - title = `Редактирование ответа`
+  - bodyClass = 'edit'
+
+block content
+    .mb-3
+        a.btn.btn-secondary(href=`/questions/${answer.questionId}/answers`) &laquo; К списку
+    .card-box
+        .p-2
+            form.form-horizontal(method='post')
+                +formElement('text', 'text', 'Текст ответа', answer.text)
+                +formElement('checkbox', 'right', 'Правильный ответ', answer.right)
+                +formElement('textarea', 'replyText', 'Ответный текст', answer.replyText)
+                +button('submit', 'Сохранить')

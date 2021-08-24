@@ -1,0 +1,47 @@
+extends ../../layout/main
+
+block variables
+  - title = `Источники вопроса "${question.name}"`
+  - bodyClass = 'sources'
+
+block content
+    .mb-3
+        a.btn.btn-secondary.mr-2(href=`/questions/${question.id}/edit`) &laquo; К вопросу
+        a.btn.btn-primary(href=`/questions/${question.id}/source`) Новый источник
+    .row
+        .col-lg-12
+            .card-box
+                .d-flex.mb-3.justify-content-between
+                    .font-weight-bold
+                        | Показаны записи c #{pagination.from} по #{pagination.to} из #{pagination.count}
+                    if pagination.pages > 1
+                        nav
+                            ul.pagination.mb-0.justify-content-end
+                                li.page-item(class={ 'disabled': pagination.page == 1 })
+                                    a.page-link(href=`?page=${pagination.page - 1}`) Пред
+                                - var i = 0
+                                while i < pagination.pages
+                                    li.page-item(class={ 'active': ++i == pagination.page })
+                                        a.page-link(href=`?page=${i}`)=i
+                                li.page-item(class={ 'disabled': pagination.page == pagination.pages })
+                                    a.page-link(href=`?page=${pagination.page + 1}`) След
+
+                .table-responsive
+                    table.table.table-hover.mb-0
+                        thead
+                            tr
+                                th Тип
+                                th Название
+                                th
+                        tbody
+                          each source in sources
+                              tr
+                                  td #{source.id}
+                                  td #{translateSourceType(source.type)}
+                                  td #{source.name}
+                                  td
+                                      .btn-group.btn-group-sm
+                                          a.btn.btn-warning(href=`/sources/${source.id}/edit` type="button")
+                                              i.mdi.mdi-pencil
+                                          a.btn.btn-danger(href=`/sources/${source.id}/remove` type="button")
+                                              i.mdi.mdi-delete
