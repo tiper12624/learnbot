@@ -4,7 +4,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
   logging: process.env.APP_DEBUG ? console.log : false,
   dialectOptions: {
     ssl: {
-      require: true,
       rejectUnauthorized: false
     }
   },
