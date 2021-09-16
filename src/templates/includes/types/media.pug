@@ -3,6 +3,8 @@ include ../../mixins/form
 +formElement('text', 'media', 'Hash медиа', source.media)
 .form-group.row
     .col-md-10.offset-sm-2
+        if link == ''
+            span.text-warning Некорректный hash-код!
         if source.type == 'document' && link != ''
             a(href=link) Ссылка на документ
         if source.type == 'photo' && link != ''

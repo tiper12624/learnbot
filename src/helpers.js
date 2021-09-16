@@ -112,10 +112,12 @@ module.exports = {
 
   async getFile (hash) {
     if (hash != '') {
-      const { data } = await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/getFile?file_id=${hash}`)
-      if (data.ok) {
-        return data.result.file_path
-      }
+      try {
+        const { data } = await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/getFile?file_id=${hash}`)
+        if (data.ok) {
+          return data.result.file_path
+        }
+      } catch (e) {}
     }
 
     return ''
