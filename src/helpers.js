@@ -11,22 +11,43 @@ module.exports = {
     const { bot } = require('./telegraf')
 
     if (!id) {
-      id = await db.questions.min('questions.id', {
-        include: [
-          {
-            model: db.results,
-            required: false,
-            where: {
-              userId: userId,
+      // TODO: resolve error
+      /*
+(node:29) UnhandledPromiseRejectionWarning: SequelizeDatabaseError: column "results.id" must appear in the GROUP BY clause or be used in an aggregate function,
+(node:29) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 15),
+    at Query.formatError (/app/node_modules/sequelize/lib/dialects/postgres/query.js:386:16),
+    at Query.run (/app/node_modules/sequelize/lib/dialects/postgres/query.js:87:18),
+    at runMicrotasks (<anonymous>),
+    at processTicksAndRejections (internal/process/task_queues.js:95:5),
+    at async /app/node_modules/sequelize/lib/sequelize.js:619:16,
+    at async Function.aggregate (/app/node_modules/sequelize/lib/model.js:1986:19),
+    at async Function.min (/app/node_modules/sequelize/lib/model.js:2123:12),
+    at async PostgresQueryInterface.rawSelect (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:995:18),
+    at async sendQuestion (/app/src/helpers.js:14:12),
+    at async module.exports (/app/src/telegraf/commands/clear.js:13:5)
+       */
+      try {
+        id = await db.questions.min('questions.id', {
+          include: [
+            {
+              model: db.results,
+              required: false,
+              where: {
+                userId: userId,
+              }
             }
-          }
-        ],
-        where: [
-          Sequelize.where(Sequelize.col('questions.enabled'), true),
-          Sequelize.where(Sequelize.col('results.id'), null),
-        ],
-        raw: true,
-      })
+          ],
+          where: [
+            Sequelize.where(Sequelize.col('questions.enabled'), true),
+            Sequelize.where(Sequelize.col('results.id'), null),
+          ],
+          raw: true,
+        })
+      } catch (e) {
+        id = await db.questions.min('questions.id', {
+          raw: true,
+        })
+      }
     }
 
     const question = await db.questions.findByPk(id, {
