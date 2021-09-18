@@ -44,9 +44,7 @@ module.exports = {
           raw: true,
         })
       } catch (e) {
-        id = await db.questions.min('questions.id', {
-          raw: true,
-        })
+        id = await db.questions.min('id')
       }
     }
 
