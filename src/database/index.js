@@ -10,6 +10,7 @@ const db = {
   answers: require('./models/answers')(sequelize),
   questions: require('./models/questions')(sequelize),
   results: require('./models/results')(sequelize),
+  settings: require('./models/settings')(sequelize),
   sources: require('./models/sources')(sequelize),
   users: require('./models/users')(sequelize),
 }

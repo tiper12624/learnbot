@@ -1,12 +1,9 @@
 const { Sequelize } = require('sequelize')
 const axios = require('axios')
 const { db } = require('./database')
+const { bot } = require('./telegraf')
 
 module.exports = {
-  getGreetings () {
-    return 'Приветствуем, это обучающий бот платформы FreeUnion.online. Совсем скоро ты сможешь присоединяться к объединениям и вместе делать хорошие и важные дела, а сейчас хотим рассказать нашу историю - кто мы и какие наши ценности. Отвечай на вопросы и будь в курсе событий.'
-  },
-
   async sendQuestion (userId, id, test = false) {
     const { bot } = require('./telegraf')
 
@@ -62,6 +59,9 @@ module.exports = {
         }
       }
 
+      const beforeVariantsPause = await module.exports.getSetting('beforeVariantsPause', 0)
+      await module.exports.timeout(beforeVariantsPause)
+
       const buttons = []
       let line = []
       for (const answer of question.answers) {
@@ -90,7 +90,10 @@ module.exports = {
         }
       })
     } else {
-      await bot.telegram.sendMessage(userId, 'Спасибо за внимание и ответы. Совсем скоро мы продолжим обучение и расскажем как ты можешь помочь себе и что для можешь делать при помощи нашей платформы. Спасибо что с нами!')
+      const goodbyeText = await module.exports.getSetting('goodbyeText', '')
+      if (goodbyeText !== '') {
+        await bot.telegram.sendMessage(userId, goodbyeText)
+      }
     }
   },
 
@@ -155,7 +158,20 @@ module.exports = {
     return ((size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]).toString().replace('.', '\\.')
   },
 
-  getSetting (name) {
+  async getSetting (name, def = null) {
+    const result = await db.settings.findOne({ where: { name } })
 
+    return result !== null ? result.value : def
   },
+
+  async saveSetting (name, value = null) {
+    if (value === null) {
+      await db.settings.destroy({ where: { name } })
+    } else {
+      const settings = await db.settings.findOrCreate({ where: { name } })
+      const setting = settings[0]
+      setting.value = value
+      await setting.save()
+    }
+  }
 }

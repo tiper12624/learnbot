@@ -1,5 +1,5 @@
 const { db } = require('../../database')
-const { sendQuestion, yesSmile, noSmile, timeout } = require('../../helpers')
+const { getSetting, sendQuestion, yesSmile, noSmile, timeout } = require('../../helpers')
 
 module.exports = async (ctx) => {
   const message = ctx.callbackQuery.message
@@ -23,17 +23,20 @@ module.exports = async (ctx) => {
       }
     })
 
-    await timeout(.5)
+    const beforeSmilePause = await getSetting('beforeSmilePause', 0)
+    await timeout(beforeSmilePause)
     if (answer.right) {
       await ctx.reply(yesSmile())
     } else {
       await ctx.reply(noSmile())
     }
 
-    await timeout(1)
+    const beforeAnswerPause = await getSetting('beforeAnswerPause', 0)
+    await timeout(beforeAnswerPause)
     await ctx.reply(answer.replyText)
   }
 
-  await timeout(3)
+  const beforeQuestionPause = await getSetting('beforeQuestionPause', 0)
+  await timeout(beforeQuestionPause)
   await sendQuestion(userId)
 }

@@ -1,5 +1,5 @@
 const { db } = require('../../database')
-const { getGreetings, sendQuestion } = require('../../helpers')
+const { getSetting, sendQuestion } = require('../../helpers')
 
 module.exports = async (ctx) => {
   const user = await db.users.findByPk(ctx.from.id)
@@ -9,7 +9,10 @@ module.exports = async (ctx) => {
         userId: user.id
       }
     })
-    await ctx.reply(getGreetings())
+    const welcomeText = await getSetting('welcomeText', '')
+    if (welcomeText !== '') {
+      await ctx.reply(welcomeText)
+    }
     await sendQuestion(user.id)
   }
 }

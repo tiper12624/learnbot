@@ -1,5 +1,5 @@
 const { db } = require('../../database')
-const { getGreetings, sendQuestion } = require('../../helpers')
+const { getSetting, sendQuestion } = require('../../helpers')
 
 module.exports = async (ctx) => {
   const id = ctx.from.id
@@ -17,7 +17,10 @@ module.exports = async (ctx) => {
       .then(async user => {
         if (user === null) {
           db.users.create({ id }).then()
-          await ctx.reply(getGreetings())
+          const welcomeText = await getSetting('welcomeText', '')
+          if (welcomeText !== '') {
+            await ctx.reply(welcomeText)
+          }
         }
 
         sendQuestion(id).then()

@@ -1,5 +1,5 @@
 const { db } = require('../../database')
-const { getRoot } = require('../../helpers')
+const { getRoot, getSetting, saveSetting } = require('../../helpers')
 
 module.exports = async (request, reply) => {
   const usersCount = await db.users.count()
@@ -10,6 +10,14 @@ module.exports = async (request, reply) => {
       right: true
     }
   })
+
+  console.log(await getSetting('temp', 'empty'))
+
+  await saveSetting('temp', 'filled')
+  console.log(await getSetting('temp', 'empty'))
+
+  await saveSetting('temp', 'filled 2')
+  console.log(await getSetting('temp', 'empty'))
 
   reply.view('dashboard', {
     usersCount,

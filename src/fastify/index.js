@@ -3,12 +3,14 @@ const fastify = require('fastify')()
 const Answer = require('./pages/answers')
 const Question = require('./pages/questions')
 const Result = require('./pages/results')
+const Settings = require('./pages/settings')
 const Source = require('./pages/sources')
 const User = require('./pages/users')
 
 const answer = new Answer()
 const question = new Question()
 const result = new Result()
+const settings = new Settings()
 const source = new Source()
 const user = new User()
 
@@ -91,5 +93,8 @@ fastify.get('/users/:users/edit', user.edit)
 fastify.post('/users/:users/edit', user.save)
 fastify.get('/users/:users/remove', user.remove)
 fastify.post('/users/:users/remove', user.removeSubmit)
+
+fastify.get('/settings', settings.list)
+fastify.post('/settings', settings.save)
 
 module.exports = { fastify }
