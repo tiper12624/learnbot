@@ -11,9 +11,9 @@ const { fastify } = require('./fastify')
 // Sequelize
 db.sequelize.sync().then(async () => {
   if (process.env.NODE_ENV === 'development') {
-    await seeders.users(db)
-    await seeders.questions(db)
-    await seeders.results(db)
+    // await seeders.users(db)
+    // await seeders.questions(db)
+    // await seeders.results(db)
   }
 })
 
