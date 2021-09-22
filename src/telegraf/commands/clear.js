@@ -11,7 +11,7 @@ module.exports = async (ctx) => {
     })
     const welcomeText = await getSetting('welcomeText', '')
     if (welcomeText !== '') {
-      await ctx.reply(welcomeText)
+      await ctx.reply(welcomeText, { parse_mode: 'MarkdownV2' })
     }
     await sendQuestion(user.id)
   }
