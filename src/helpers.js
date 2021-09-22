@@ -39,7 +39,7 @@ module.exports = {
       for (const source of question.sources) {
         switch (source.type) {
           case 'text':
-            await bot.telegram.sendMessage(userId, source.media, { parse_mode: 'MarkdownV2' })
+            await bot.telegram.sendMessage(userId, source.media, { parse_mode: 'Markdown' })
             break
           case 'document':
             await bot.telegram.sendDocument(userId, source.media)
@@ -92,7 +92,7 @@ module.exports = {
     } else {
       const goodbyeText = await module.exports.getSetting('goodbyeText', '')
       if (goodbyeText !== '') {
-        await bot.telegram.sendMessage(userId, goodbyeText, { parse_mode: 'MarkdownV2' })
+        await bot.telegram.sendMessage(userId, goodbyeText, { parse_mode: 'Markdown' })
       }
     }
   },

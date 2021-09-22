@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
           db.users.create({ id }).then()
           const welcomeText = await getSetting('welcomeText', '')
           if (welcomeText !== '') {
-            await ctx.reply(welcomeText, { parse_mode: 'MarkdownV2' })
+            await ctx.reply(welcomeText, { parse_mode: 'Markdown' })
           }
         }
 

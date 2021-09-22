@@ -8,12 +8,12 @@ block variables
 
 block content
     .card-box
-        a(href="https://core.telegram.org/bots/api#markdownv2-style" target="_blank") Правила оформления сообщений (MarkdownV2)
+        a(href="https://core.telegram.org/bots/api#markdown-style" target="_blank") Правила оформления сообщений (Markdown)
 
         .p-2
             form.form-horizontal(method='post')
-                +formElement('textarea', 'welcomeText', 'Приветственное сообщение (MarkdownV2)', settings.welcomeText)
-                +formElement('textarea', 'goodbyeText', 'Сообщение в конце опроса (MarkdownV2)', settings.goodbyeText)
+                +formElement('textarea', 'welcomeText', 'Приветственное сообщение (Markdown)', settings.welcomeText)
+                +formElement('textarea', 'goodbyeText', 'Сообщение в конце опроса (Markdown)', settings.goodbyeText)
                 +formElement('text', 'beforeQuestionPause', 'Пауза между вопросами (сек)', settings.beforeQuestionPause)
                 +formElement('text', 'beforeVariantsPause', 'Пауза перед вариантами (сек)', settings.beforeVariantsPause)
                 +formElement('text', 'beforeSmilePause', 'Пауза перед смайлом (сек)', settings.beforeSmilePause)
