@@ -1,4 +1,3 @@
-const { Sequelize } = require('sequelize')
 const moment = require('moment')
 const { db } = require('../../database')
 const Model = require('./model')
@@ -14,6 +13,9 @@ class Result extends Model {
         ...(request.params.uid) && { userId: request.params.uid },
       },
       include: [db.users, db.questions],
+      order: [
+        ['id'],
+      ],
       limit: perPage,
       offset: (page - 1) * perPage,
       raw: true,

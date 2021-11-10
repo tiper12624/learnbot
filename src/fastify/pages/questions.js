@@ -17,6 +17,9 @@ class Question extends Model {
           [Sequelize.literal(`(SELECT COUNT("results"."id") FROM results WHERE "results"."questionId" = "questions"."id" AND "results"."right" = true)`), 'rights'],
         ]
       },
+      order: [
+        ['id'],
+      ],
       limit: perPage,
       offset: (page - 1) * perPage,
       raw: true,

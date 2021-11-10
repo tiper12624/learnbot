@@ -13,6 +13,9 @@ class Source extends Model {
       where: {
         questionId: question.id
       },
+      order: [
+        ['id'],
+      ],
       limit: perPage,
       offset: (page - 1) * perPage,
       raw: true,
