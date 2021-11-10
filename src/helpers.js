@@ -88,7 +88,7 @@ module.exports = {
         }])
       }
 
-      await bot.telegram.sendMessage(userId, 'Выберите один из вариант ответа', {
+      await bot.telegram.sendMessage(userId, '', {
         reply_markup: {
           inline_keyboard: buttons
         }
