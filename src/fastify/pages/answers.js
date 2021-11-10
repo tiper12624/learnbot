@@ -1,9 +1,9 @@
-const { Sequelize } = require('sequelize')
 const { db } = require('../../database')
 const Model = require('./model')
 
 class Answer extends Model {
   async list (request, reply) {
+    // noinspection DuplicatedCode
     const question = reply.locals.models.questions
     const page = request.query.page ?? 1
     const perPage = 10
@@ -33,7 +33,7 @@ class Answer extends Model {
     })
   }
 
-  new (request, reply) {
+  async new (request, reply) {
     reply.view('pages/answers/new')
   }
 
@@ -67,7 +67,7 @@ class Answer extends Model {
     super.save(request, reply)
   }
 
-  remove (request, reply) {
+  async remove (request, reply) {
     super.remove(request, reply, `Удалить ответ "${reply.locals.models.answers.text}"?`)
   }
 

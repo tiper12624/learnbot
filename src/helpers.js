@@ -1,10 +1,9 @@
-const { Sequelize } = require('sequelize')
+const { Sequelize, Op } = require('sequelize')
 const axios = require('axios')
 const { db } = require('./database')
-const { bot } = require('./telegraf')
 
 module.exports = {
-  async sendQuestion (userId, id, test = false) {
+  async sendQuestion (userId, id) {
     const { bot } = require('./telegraf')
 
     if (!id) {
@@ -19,15 +18,20 @@ module.exports = {
             }
           }
         ],
-        where: [
-          Sequelize.where(Sequelize.col('questions.enabled'), true),
-          Sequelize.where(Sequelize.col('results.id'), null),
-        ],
+        where: {
+          [Op.and]: [
+            Sequelize.where(Sequelize.col('questions.enabled'), 'true'),
+            Sequelize.where(Sequelize.col('results.id'), null),
+          ]
+        },
         raw: true,
       })
     }
 
-    const question = await db.questions.findByPk(id, {
+    const question = await db.questions.findOne({
+      where: {
+        id,
+      },
       order: [
         [db.sources, 'id', 'ASC'],
         [db.answers, 'id', 'ASC'],
@@ -115,7 +119,7 @@ module.exports = {
   },
 
   async getFile (hash) {
-    if (hash != '') {
+    if (hash !== '') {
       try {
         const { data } = await axios.get(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/getFile?file_id=${hash}`)
         if (data.ok) {

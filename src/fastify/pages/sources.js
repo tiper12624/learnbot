@@ -1,10 +1,10 @@
-const { Sequelize } = require('sequelize')
 const { db } = require('../../database')
 const Model = require('./model')
 const { translateSourceType, getFile } = require('../../helpers')
 
 class Source extends Model {
   async list (request, reply) {
+    // noinspection DuplicatedCode
     const question = reply.locals.models.questions
     const page = request.query.page ?? 1
     const perPage = 10
@@ -35,7 +35,7 @@ class Source extends Model {
     })
   }
 
-  new (request, reply) {
+  async new (request, reply) {
     reply.view('pages/sources/new')
   }
 
@@ -103,7 +103,7 @@ class Source extends Model {
     super.save(request, reply)
   }
 
-  remove (request, reply) {
+  async remove (request, reply) {
     super.remove(request, reply, `Удалить источник "${reply.locals.models.sources.name}"?`)
   }
 

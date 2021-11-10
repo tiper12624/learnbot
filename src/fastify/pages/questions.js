@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize')
 const { db } = require('../../database')
 const Model = require('./model')
-const moment = require('moment')
 const { sendQuestion } = require('../../helpers')
 
 class Question extends Model {
@@ -38,7 +37,7 @@ class Question extends Model {
     })
   }
 
-  new (request, reply) {
+  async new (request, reply) {
     reply.view('pages/questions/new')
   }
 
@@ -50,7 +49,7 @@ class Question extends Model {
     reply.redirect(`/questions/${question.id}/edit`)
   }
 
-  edit (request, reply) {
+  async edit (request, reply) {
     reply.view('pages/questions/edit', {
       question: reply.locals.models.questions
     })
@@ -78,13 +77,13 @@ class Question extends Model {
     reply.redirect(request.headers['referer'] ?? '/questions')
   }
 
-  send (request, reply) {
+  async send (request, reply) {
     sendQuestion(request.userId, reply.locals.models.questions.id).then()
 
     reply.redirect(request.headers['referer'] ?? '/questions')
   }
 
-  remove (request, reply) {
+  async remove (request, reply) {
     super.remove(request, reply, `Удалить вопрос "${reply.locals.models.questions.name}"?`)
   }
 

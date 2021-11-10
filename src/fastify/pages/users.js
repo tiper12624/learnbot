@@ -1,7 +1,6 @@
 const { Sequelize } = require('sequelize')
 const { db } = require('../../database')
 const Model = require('./model')
-const moment = require('moment')
 
 class User extends Model {
   async list (request, reply) {
@@ -36,7 +35,7 @@ class User extends Model {
     })
   }
 
-  edit (request, reply) {
+  async edit (request, reply) {
     reply.view('pages/users/edit', {
       user: reply.locals.models.users
     })
@@ -54,7 +53,7 @@ class User extends Model {
     super.save(request, reply)
   }
 
-  remove (request, reply) {
+  async remove (request, reply) {
     super.remove(request, reply, `Удалить пользователя #${reply.locals.models.users.id}?`)
   }
 

@@ -1,5 +1,5 @@
 const { db } = require('../../database')
-const httpErrors = require('http-errors')
+const createError = require('http-errors')
 
 module.exports = (request, reply, next) => {
   if (!reply.locals) {
@@ -27,7 +27,7 @@ module.exports = (request, reply, next) => {
   }
 
   if (resolves.length > 0) {
-    Promise.all(resolves).then(() => next(), () => reply.send(httpErrors.NotFound()))
+    Promise.all(resolves).then(() => next(), () => reply.send(createError(404)))
   } else {
     next()
   }
