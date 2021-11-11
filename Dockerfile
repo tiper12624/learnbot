@@ -16,7 +16,7 @@ RUN apk add --no-cache --virtual .gyp \
                     g++ \
                     libtool \
                     make \
-                    python \
+                    python3 \
     && yarn install \
     && apk del .gyp
 
