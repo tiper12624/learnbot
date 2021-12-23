@@ -97,4 +97,8 @@ fastify.post('/users/:users/remove', user.removeSubmit)
 fastify.get('/settings', settings.list)
 fastify.post('/settings', settings.save)
 
+fastify.get('/health', (request, reply) => {
+  reply.send('OK')
+})
+
 module.exports = { fastify }
