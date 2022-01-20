@@ -7,6 +7,7 @@ bot.start(require('./commands/start'))
 bot.command('admin', require('./commands/admin'))
 bot.command('clear', require('./commands/clear'))
 bot.command('id', require('./commands/id'))
+bot.command('version', require('./commands/version'))
 bot.command('smiles', require('./commands/smiles'))
 
 bot.on('callback_query', require('./events/callback_query'))
