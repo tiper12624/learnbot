@@ -67,19 +67,11 @@ module.exports = {
       await module.exports.timeout(beforeVariantsPause)
 
       const buttons = []
-      let line = []
       for (const answer of question.answers) {
-        line.push({
+        buttons.push([{
           text: answer.text,
           callback_data: answer.id,
-        })
-        if (line.length === 2) {
-          buttons.push(line)
-          line = []
-        }
-      }
-      if (line.length > 0) {
-        buttons.push(line)
+        }])
       }
       if (buttons.length === 0) {
         buttons.push([{
