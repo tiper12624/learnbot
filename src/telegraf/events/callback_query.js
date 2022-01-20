@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
 
     const beforeAnswerPause = await getSetting('beforeAnswerPause', 0)
     await timeout(beforeAnswerPause)
-    await ctx.reply(answer.replyText)
+    await ctx.reply(answer.replyText || '...')
   }
 
   const beforeQuestionPause = await getSetting('beforeQuestionPause', 0)
