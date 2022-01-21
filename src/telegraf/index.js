@@ -2,6 +2,8 @@ const { Telegraf } = require('telegraf')
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
 
+bot.catch(err => console.log('Ooops', err))
+
 bot.start(require('./commands/start'))
 
 bot.command('admin', require('./commands/admin'))
